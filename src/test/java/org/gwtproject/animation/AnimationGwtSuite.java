@@ -15,16 +15,17 @@
  */
 package org.gwtproject.animation;
 
-import org.gwtproject.animation.client.AnimationSchedulerTest;
-import org.gwtproject.animation.client.AnimationTest;
-
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import org.gwtproject.animation.client.AnimationSchedulerTest;
+import org.gwtproject.animation.client.AnimationTest;
 
 /**
  * Tests of the animation package.
  */
-public class AnimationSuite {
+public class AnimationGwtSuite {
+
+
   public static Test suite() {
     TestSuite suite = new TestSuite("Tests of the animation package");
 

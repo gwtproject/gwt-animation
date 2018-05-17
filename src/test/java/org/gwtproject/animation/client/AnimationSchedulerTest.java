@@ -13,23 +13,24 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package org.gwtproject.animation.client;
 
-import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
-import org.gwtproject.animation.client.AnimationScheduler.AnimationHandle;
-import org.gwtproject.timer.client.Timer;
-
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.dom.client.DivElement;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.junit.DoNotRunWith;
 import com.google.gwt.junit.Platform;
 import com.google.gwt.junit.client.GWTTestCase;
+import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
+import org.gwtproject.animation.client.AnimationScheduler.AnimationHandle;
+import org.gwtproject.core.client.Duration;
+import org.gwtproject.dom.client.DivElement;
+import org.gwtproject.dom.client.Document;
+import org.gwtproject.timer.client.Timer;
 
 /**
  * Tests the {@link AnimationScheduler} class.
  */
-public class AnimationSchedulerTest extends GWTTestCase {
+public class AnimationSchedulerTest
+  extends GWTTestCase {
 
   /**
    * The default timeout of asynchronous tests.
@@ -47,17 +48,30 @@ public class AnimationSchedulerTest extends GWTTestCase {
 
   @Override
   public String getModuleName() {
-    return "org.gwtproject.animation.Animation";
+    return "org.gwtproject.animation.AnimationTest";
+  }
+
+  @Override
+  protected void gwtSetUp()
+    throws Exception {
+    scheduler = AnimationScheduler.get();
+  }
+
+  @Override
+  protected void gwtTearDown()
+    throws Exception {
+    scheduler = null;
   }
 
   public void testCancel() {
     delayTestFinish(TEST_TIMEOUT);
     AnimationHandle handle = scheduler.requestAnimationFrame(new AnimationCallback() {
-      @Override
-      public void execute(double timestamp) {
-        fail("The animation frame was cancelled and should not execute.");
-      }
-    }, null);
+                                                               @Override
+                                                               public void execute(double timestamp) {
+                                                                 fail("The animation frame was cancelled and should not execute.");
+                                                               }
+                                                             },
+                                                             null);
 
     // Cancel the animation frame.
     handle.cancel();
@@ -77,15 +91,17 @@ public class AnimationSchedulerTest extends GWTTestCase {
   public void testRequestAnimationFrame() {
     delayTestFinish(TEST_TIMEOUT);
     final double startTime = Duration.currentTimeMillis();
-    DivElement element = Document.get().createDivElement();
+    DivElement element = Document.get()
+                                 .createDivElement();
     scheduler.requestAnimationFrame(new AnimationCallback() {
-      @Override
-      public void execute(double timestamp) {
-        // Make sure timestamp is not a high-res timestamp (see issue 8570)
-        assertTrue(timestamp >= startTime);
-        finishTest();
-      }
-    }, element);
+                                      @Override
+                                      public void execute(double timestamp) {
+                                        // Make sure timestamp is not a high-res timestamp (see issue 8570)
+                                        assertTrue(timestamp >= startTime);
+                                        finishTest();
+                                      }
+                                    },
+                                    element);
   }
 
   // The same as above
@@ -94,22 +110,13 @@ public class AnimationSchedulerTest extends GWTTestCase {
     delayTestFinish(TEST_TIMEOUT);
     final double startTime = Duration.currentTimeMillis();
     scheduler.requestAnimationFrame(new AnimationCallback() {
-      @Override
-      public void execute(double timestamp) {
-        // Make sure timestamp is not a high-res timestamp (see issue 8570)
-        assertTrue(timestamp >= startTime);
-        finishTest();
-      }
-    }, null);
-  }
-
-  @Override
-  protected void gwtSetUp() throws Exception {
-    scheduler = AnimationScheduler.get();
-  }
-
-  @Override
-  protected void gwtTearDown() throws Exception {
-    scheduler = null;
+                                      @Override
+                                      public void execute(double timestamp) {
+                                        // Make sure timestamp is not a high-res timestamp (see issue 8570)
+                                        assertTrue(timestamp >= startTime);
+                                        finishTest();
+                                      }
+                                    },
+                                    null);
   }
 }

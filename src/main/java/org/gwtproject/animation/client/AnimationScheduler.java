@@ -13,10 +13,10 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package org.gwtproject.animation.client;
 
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.dom.client.Element;
 
 /**
  * This class provides task scheduling for animations. Any exceptions thrown by
@@ -26,42 +26,6 @@ import com.google.gwt.dom.client.Element;
  */
 public abstract class AnimationScheduler {
 
-  /**
-   * Helper to detect native support for animations.
-   * <p>
-   * Note: This class solely exists to provide opportunity for mocking frameworks to intercept
-   * the native call.
-   */
-  public static class AnimationSupportDetector {
-    public native boolean isNativelySupported() /*-{
-      return !!$wnd.requestAnimationFrame && !!$wnd.cancelAnimationFrame;
-    }-*/;
-  }
-
-  /**
-   * The callback used when an animation frame becomes available.
-   */
-  public interface AnimationCallback {
-    /**
-     * Invokes the command.
-     *
-     * @param timestamp the current timestamp
-     */
-    void execute(double timestamp);
-  }
-
-  /**
-   * A handle to the requested animation frame created by
-   * {@link #requestAnimationFrame(AnimationCallback, Element)}.
-   */
-  public abstract static class AnimationHandle {
-    /**
-     * Cancel the requested animation frame. If the animation frame is already
-     * canceled, do nothing.
-     */
-    public abstract void cancel();
-  }
-
   private static AnimationScheduler instance;
 
   /**
@@ -69,9 +33,7 @@ public abstract class AnimationScheduler {
    */
   public static AnimationScheduler get() {
     if (instance == null) {
-      AnimationSupportDetector supportDetector = GWT.create(AnimationSupportDetector.class);
-      instance = (supportDetector != null && supportDetector.isNativelySupported())
-             ? new AnimationSchedulerImplStandard() : new AnimationSchedulerImplTimer();
+      instance = new AnimationSchedulerImplStandard();
     }
     return instance;
   }
@@ -99,7 +61,8 @@ public abstract class AnimationScheduler {
    * @see #requestAnimationFrame(AnimationCallback, Element)
    */
   public AnimationHandle requestAnimationFrame(AnimationCallback callback) {
-    return requestAnimationFrame(callback, null);
+    return requestAnimationFrame(callback,
+                                 null);
   }
 
   /**
@@ -115,8 +78,33 @@ public abstract class AnimationScheduler {
    * </p>
    *
    * @param callback the callback to fire
+   * @param element  the element being animated
    * @return a handle to the requested animation frame
-   * @param element the element being animated
    */
-  public abstract AnimationHandle requestAnimationFrame(AnimationCallback callback, Element element);
+  public abstract AnimationHandle requestAnimationFrame(AnimationCallback callback,
+                                                        Element element);
+
+  /**
+   * The callback used when an animation frame becomes available.
+   */
+  public interface AnimationCallback {
+    /**
+     * Invokes the command.
+     *
+     * @param timestamp the current timestamp
+     */
+    void execute(double timestamp);
+  }
+
+  /**
+   * A handle to the requested animation frame created by
+   * {@link #requestAnimationFrame(AnimationCallback, Element)}.
+   */
+  public abstract static class AnimationHandle {
+    /**
+     * Cancel the requested animation frame. If the animation frame is already
+     * canceled, do nothing.
+     */
+    public abstract void cancel();
+  }
 }

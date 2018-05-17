@@ -13,12 +13,13 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package org.gwtproject.animation.client;
 
 import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationHandle;
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.dom.client.Element;
+import org.gwtproject.core.client.Duration;
+import org.gwtproject.dom.client.Element;
 
 /**
  * An {@link Animation} is a continuous event that updates progressively over
@@ -26,22 +27,11 @@ import com.google.gwt.dom.client.Element;
  */
 public abstract class Animation {
 
-  private final AnimationCallback callback = new AnimationCallback() {
-    @Override
-    public void execute(double timestamp) {
-      if (update(timestamp)) {
-        // Schedule the next animation frame.
-        requestHandle = scheduler.requestAnimationFrame(callback, element);
-      } else {
-        requestHandle = null;
-      }
-    }
-  };
-
+  private final AnimationScheduler scheduler;
   /**
    * The duration of the {@link Animation} in milliseconds.
    */
-  private int duration = -1;
+  private       int                duration = -1;
 
   /**
    * The element being animated.
@@ -67,19 +57,27 @@ public abstract class Animation {
    * The unique ID of the current run. Used to handle cases where an animation
    * is restarted within an execution block.
    */
-  private int runId = -1;
-
-  private final AnimationScheduler scheduler;
-
+  private       int               runId      = -1;
   /**
    * The start time of the {@link Animation}.
    */
-  private double startTime = -1;
-
+  private       double            startTime  = -1;
+  private final AnimationCallback callback   = new AnimationCallback() {
+    @Override
+    public void execute(double timestamp) {
+      if (update(timestamp)) {
+        // Schedule the next animation frame.
+        requestHandle = scheduler.requestAnimationFrame(callback,
+                                                        element);
+      } else {
+        requestHandle = null;
+      }
+    }
+  };
   /**
    * Did the animation start before {@link #cancel()} was called.
    */
-  private boolean wasStarted = false;
+  private       boolean           wasStarted = false;
 
   /**
    * Construct a new {@link Animation}.
@@ -96,6 +94,72 @@ public abstract class Animation {
    */
   protected Animation(AnimationScheduler scheduler) {
     this.scheduler = scheduler;
+  }
+
+  /**
+   * Immediately run this animation. If the animation is already running, it
+   * will be canceled first.
+   * <p>
+   * This is equivalent to <code>run(duration, null)</code>.
+   *
+   * @param duration the duration of the animation in milliseconds
+   * @see #run(int, Element)
+   */
+  public void run(int duration) {
+    run(duration,
+        null);
+  }
+
+  /**
+   * Immediately run this animation. If the animation is already running, it
+   * will be canceled first.
+   * <p>
+   * If the element is not <code>null</code>, the {@link #onUpdate(double)}
+   * method might be called only if the element may be visible (generally left
+   * at the appreciation of the browser). Otherwise, it will be called
+   * unconditionally.
+   *
+   * @param duration the duration of the animation in milliseconds
+   * @param element  the element that visually bounds the entire animation
+   */
+  public void run(int duration,
+                  Element element) {
+    run(duration,
+        Duration.currentTimeMillis(),
+        element);
+  }
+
+  /**
+   * Run this animation at the given startTime. If the startTime has already
+   * passed, the animation will run synchronously as if it started at the
+   * specified start time. If the animation is already running, it will be
+   * canceled first.
+   * <p>
+   * If the element is not <code>null</code>, the {@link #onUpdate(double)}
+   * method might be called only if the element may be visible (generally left
+   * at the appreciation of the browser). Otherwise, it will be called
+   * unconditionally.
+   *
+   * @param duration  the duration of the animation in milliseconds
+   * @param startTime the synchronized start time in milliseconds
+   * @param element   the element that visually bounds the entire animation
+   */
+  public void run(int duration,
+                  double startTime,
+                  Element element) {
+    // Cancel the animation if it is running
+    cancel();
+
+    // Save the duration and startTime
+    isRunning = true;
+    isStarted = false;
+    this.duration = duration;
+    this.startTime = startTime;
+    this.element = element;
+    ++runId;
+
+    // Execute the first callback.
+    callback.execute(Duration.currentTimeMillis());
   }
 
   /**
@@ -124,103 +188,6 @@ public abstract class Animation {
   }
 
   /**
-   * Immediately run this animation. If the animation is already running, it
-   * will be canceled first.
-   * <p>
-   * This is equivalent to <code>run(duration, null)</code>.
-   *
-   * @param duration the duration of the animation in milliseconds
-   * @see #run(int, Element)
-   */
-  public void run(int duration) {
-    run(duration, null);
-  }
-
-  /**
-   * Immediately run this animation. If the animation is already running, it
-   * will be canceled first.
-   * <p>
-   * If the element is not <code>null</code>, the {@link #onUpdate(double)}
-   * method might be called only if the element may be visible (generally left
-   * at the appreciation of the browser). Otherwise, it will be called
-   * unconditionally.
-   *
-   * @param duration the duration of the animation in milliseconds
-   * @param element the element that visually bounds the entire animation
-   */
-  public void run(int duration, Element element) {
-    run(duration, Duration.currentTimeMillis(), element);
-  }
-
-  /**
-   * Run this animation at the given startTime. If the startTime has already
-   * passed, the animation will run synchronously as if it started at the
-   * specified start time. If the animation is already running, it will be
-   * canceled first.
-   * <p>
-   * This is equivalent to <code>run(duration, startTime, null)</code>.
-   *
-   * @param duration the duration of the animation in milliseconds
-   * @param startTime the synchronized start time in milliseconds
-   * @see #run(int, double, Element)
-   */
-  public void run(int duration, double startTime) {
-    run(duration, startTime, null);
-  }
-
-  /**
-   * Run this animation at the given startTime. If the startTime has already
-   * passed, the animation will run synchronously as if it started at the
-   * specified start time. If the animation is already running, it will be
-   * canceled first.
-   * <p>
-   * If the element is not <code>null</code>, the {@link #onUpdate(double)}
-   * method might be called only if the element may be visible (generally left
-   * at the appreciation of the browser). Otherwise, it will be called
-   * unconditionally.
-   *
-   * @param duration the duration of the animation in milliseconds
-   * @param startTime the synchronized start time in milliseconds
-   * @param element the element that visually bounds the entire animation
-   */
-  public void run(int duration, double startTime, Element element) {
-    // Cancel the animation if it is running
-    cancel();
-
-    // Save the duration and startTime
-    isRunning = true;
-    isStarted = false;
-    this.duration = duration;
-    this.startTime = startTime;
-    this.element = element;
-    ++runId;
-
-    // Execute the first callback.
-    callback.execute(Duration.currentTimeMillis());
-  }
-
-  /**
-   * Returns true if the animation is running.
-   * Note that animation may be 'running' but no callbacks is executed yet.
-   */
-  public boolean isRunning() {
-    return isRunning;
-  }
-
-  /**
-   * Interpolate the linear progress into a more natural easing function.
-   *
-   * Depending on the {@link Animation}, the return value of this method can be
-   * less than 0.0 or greater than 1.0.
-   *
-   * @param progress the linear progress, between 0.0 and 1.0
-   * @return the interpolated progress
-   */
-  protected double interpolate(double progress) {
-    return (1 + Math.cos(Math.PI + progress * Math.PI)) / 2;
-  }
-
-  /**
    * Called immediately after the animation is canceled. The default
    * implementation of this method calls {@link #onComplete()} only if the
    * animation has actually started running.
@@ -239,15 +206,8 @@ public abstract class Animation {
   }
 
   /**
-   * Called immediately before the animation starts.
-   */
-  protected void onStart() {
-    onUpdate(interpolate(0.0));
-  }
-
-  /**
    * Called when the animation should be updated.
-   *
+   * <p>
    * The value of progress is between 0.0 and 1.0 (inclusive) (unless you
    * override the {@link #interpolate(double)} method to provide a wider range
    * of values). There is no guarantee that {@link #onUpdate(double)} is called
@@ -260,13 +220,43 @@ public abstract class Animation {
   protected abstract void onUpdate(double progress);
 
   /**
-   * Check if the specified run ID is still being run.
+   * Interpolate the linear progress into a more natural easing function.
+   * <p>
+   * Depending on the {@link Animation}, the return value of this method can be
+   * less than 0.0 or greater than 1.0.
    *
-   * @param curRunId the current run ID to check
-   * @return true if running, false if canceled or restarted
+   * @param progress the linear progress, between 0.0 and 1.0
+   * @return the interpolated progress
    */
-  private boolean isRunning(int curRunId) {
-    return isRunning && (runId == curRunId);
+  protected double interpolate(double progress) {
+    return (1 + Math.cos(Math.PI + progress * Math.PI)) / 2;
+  }
+
+  /**
+   * Run this animation at the given startTime. If the startTime has already
+   * passed, the animation will run synchronously as if it started at the
+   * specified start time. If the animation is already running, it will be
+   * canceled first.
+   * <p>
+   * This is equivalent to <code>run(duration, startTime, null)</code>.
+   *
+   * @param duration  the duration of the animation in milliseconds
+   * @param startTime the synchronized start time in milliseconds
+   * @see #run(int, double, Element)
+   */
+  public void run(int duration,
+                  double startTime) {
+    run(duration,
+        startTime,
+        null);
+  }
+
+  /**
+   * Returns true if the animation is running.
+   * Note that animation may be 'running' but no callbacks is executed yet.
+   */
+  public boolean isRunning() {
+    return isRunning;
   }
 
   /**
@@ -310,5 +300,22 @@ public abstract class Animation {
       return false;
     }
     return true;
+  }
+
+  /**
+   * Check if the specified run ID is still being run.
+   *
+   * @param curRunId the current run ID to check
+   * @return true if running, false if canceled or restarted
+   */
+  private boolean isRunning(int curRunId) {
+    return isRunning && (runId == curRunId);
+  }
+
+  /**
+   * Called immediately before the animation starts.
+   */
+  protected void onStart() {
+    onUpdate(interpolate(0.0));
   }
 }

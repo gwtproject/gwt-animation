@@ -15,37 +15,37 @@
  */
 package org.gwtproject.animation.client;
 
-import com.google.gwt.core.client.JavaScriptObject;
-import com.google.gwt.dom.client.Element;
+import elemental2.dom.DomGlobal;
+import jsinterop.base.Js;
+import org.gwtproject.core.client.Duration;
+import org.gwtproject.dom.client.Element;
 
 /**
  * {@link AnimationScheduler} implementation that uses standard {@code requestAnimationFrame} API.
  */
-class AnimationSchedulerImplStandard extends AnimationScheduler {
+class AnimationSchedulerImplStandard
+  extends AnimationScheduler {
 
   @Override
-  public AnimationHandle requestAnimationFrame(AnimationCallback callback, Element element) {
-    final JavaScriptObject handle = requestImpl(callback, element);
+  public AnimationHandle requestAnimationFrame(AnimationCallback callback,
+                                               Element element) {
+    final int id = requestImplNew(callback,
+                                  element);
     return new AnimationHandle() {
-      @Override public void cancel() {
-        cancelImpl(handle);
+      @Override
+      public void cancel() {
+        cancelImpl(id);
       }
     };
   }
 
-  private static native JavaScriptObject requestImpl(AnimationCallback cb, Element element) /*-{
-    var callback = $entry(function() {
-      var time = @com.google.gwt.core.client.Duration::currentTimeMillis()();
-      cb.@org.gwtproject.animation.client.AnimationScheduler.AnimationCallback::execute(D)(time);
-    });
+  private static int requestImplNew(AnimationCallback cb,
+                                    Element element) {
+    return DomGlobal.requestAnimationFrame(p0 -> cb.execute(Duration.currentTimeMillis()),
+                                           Js.cast(element));
+  }
 
-    var handle = $wnd.requestAnimationFrame(callback, element);
-
-    // We can not treat handle as JSO in dev-mode if it is a number. Ensure that it is not:
-    return {id: handle};
-  }-*/;
-
-  private static native void cancelImpl(JavaScriptObject holder) /*-{
-    $wnd.cancelAnimationFrame(holder.id);
-  }-*/;
+  private static void cancelImpl(int id) {
+    DomGlobal.cancelAnimationFrame(id);
+  }
 }
