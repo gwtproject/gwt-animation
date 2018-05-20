@@ -15,39 +15,21 @@
  */
 package org.gwtproject.animation.client.testing;
 
+import org.gwtproject.animation.client.AnimationScheduler;
+import org.gwtproject.dom.client.Element;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.gwtproject.animation.client.AnimationScheduler;
-
-import com.google.gwt.dom.client.Element;
 
 /**
  * A stub implementation of {@link AnimationScheduler} that does not execute the
  * callbacks. Use {@link StubAnimationScheduler#getAnimationCallbacks()} to
  * retrieve and execute callbacks manually.
  */
-public class StubAnimationScheduler extends AnimationScheduler {
+public class StubAnimationScheduler
+  extends AnimationScheduler {
 
-  /**
-   * A handle to the requested animation frame created by
-   * {@link #requestAnimationFrame(AnimationCallback, Element)}.
-   */
-  public class StubAnimationHandle extends AnimationHandle {
-
-    private final AnimationCallback callback;
-
-    public StubAnimationHandle(AnimationCallback callback) {
-      this.callback = callback;
-    }
-
-    @Override
-    public void cancel() {
-      callbacks.remove(callback);
-    }
-  }
-
-  private final List<AnimationCallback> callbacks = new ArrayList<AnimationCallback>();
+  private final List<AnimationCallback> callbacks = new ArrayList<>();
 
   /**
    * Get the list of all animation callbacks that have been requested and have
@@ -60,8 +42,28 @@ public class StubAnimationScheduler extends AnimationScheduler {
   }
 
   @Override
-  public StubAnimationHandle requestAnimationFrame(AnimationCallback callback, Element element) {
+  public StubAnimationHandle requestAnimationFrame(AnimationCallback callback,
+                                                   Element element) {
     callbacks.add(callback);
     return new StubAnimationHandle(callback);
+  }
+
+  /**
+   * A handle to the requested animation frame created by
+   * {@link #requestAnimationFrame(AnimationCallback, Element)}.
+   */
+  public class StubAnimationHandle
+    extends AnimationHandle {
+
+    private final AnimationCallback callback;
+
+    public StubAnimationHandle(AnimationCallback callback) {
+      this.callback = callback;
+    }
+
+    @Override
+    public void cancel() {
+      callbacks.remove(callback);
+    }
   }
 }

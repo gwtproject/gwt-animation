@@ -16,7 +16,7 @@
 
 /**
  * Classes for Animation support.
- *
+ * <p>
  * This package contains classes that provide animation support for various GWT components.
  */
 package org.gwtproject.animation.client;

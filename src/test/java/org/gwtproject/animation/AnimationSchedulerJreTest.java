@@ -15,16 +15,15 @@
  */
 package org.gwtproject.animation;
 
-import org.gwtproject.animation.client.AnimationScheduler;
-
 import com.google.gwt.junit.GWTMockUtilities;
-
 import junit.framework.TestCase;
+import org.gwtproject.animation.client.AnimationScheduler;
 
 /**
  * Tests that AnmationScheduler can be disarmed using GWTMockUtilities.
  */
-public class AnimationSchedulerJreTest extends TestCase {
+public class AnimationSchedulerJreTest
+  extends TestCase {
 
   @Override
   public void setUp() {

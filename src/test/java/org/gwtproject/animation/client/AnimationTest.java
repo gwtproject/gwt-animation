@@ -15,13 +15,12 @@
  */
 package org.gwtproject.animation.client;
 
-import java.util.List;
-
+import com.google.gwt.junit.client.GWTTestCase;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.testing.StubAnimationScheduler;
+import org.gwtproject.core.client.Duration;
 
-import com.google.gwt.core.client.Duration;
-import com.google.gwt.junit.client.GWTTestCase;
+import java.util.List;
 
 /**
  * Tests the {@link Animation} class.
@@ -31,126 +30,39 @@ import com.google.gwt.junit.client.GWTTestCase;
  * callbacks.
  * </p>
  */
-public class AnimationTest extends GWTTestCase {
-
-  /**
-   * A default implementation of {@link Animation} used for testing.
-   */
-  private class DefaultAnimation extends Animation {
-    protected boolean canceled = false;
-    protected boolean completed = false;
-    protected double curProgress = -1.0;
-    protected boolean started = false;
-    protected boolean updated = false;
-
-    public DefaultAnimation() {
-      super(scheduler);
-    }
-
-    /**
-     * Assert the value of canceled.
-     */
-    public void assertCancelled(boolean expected) {
-      assertEquals(expected, canceled);
-    }
-
-    /**
-     * Assert the value of completed.
-     */
-    public void assertCompleted(boolean expected) {
-      assertEquals(expected, completed);
-    }
-
-    /**
-     * Assert that the progress equals the specified value.
-     */
-    public void assertProgress(double expected) {
-      assertEquals(expected, curProgress);
-    }
-
-    /**
-     * Assert the value of started.
-     */
-    public void assertStarted(boolean expected) {
-      assertEquals(expected, started);
-    }
-
-    /**
-     * Assert the value of updated.
-     */
-    public void assertUpdated(boolean expected) {
-      assertEquals(expected, updated);
-    }
-
-    public void reset() {
-      canceled = false;
-      completed = false;
-      updated = false;
-      started = false;
-      curProgress = -1.0;
-    }
-
-    @Override
-    protected void onCancel() {
-      super.onCancel();
-      canceled = true;
-    }
-
-    @Override
-    protected void onComplete() {
-      super.onComplete();
-      completed = true;
-    }
-
-    @Override
-    protected void onStart() {
-      super.onStart();
-      started = true;
-    }
-
-    @Override
-    protected void onUpdate(double progress) {
-      updated = true;
-      curProgress = progress;
-    }
-  }
-
-  /**
-   * A custom {@link Animation} used for testing.
-   */
-  private class TestAnimation extends DefaultAnimation {
-    @Override
-    protected void onCancel() {
-      canceled = true;
-    }
-
-    @Override
-    protected void onComplete() {
-      completed = true;
-    }
-
-    @Override
-    protected void onStart() {
-      started = true;
-    }
-  }
+public class AnimationTest
+  extends GWTTestCase {
 
   /**
    * The maximum delay before an animation will run. Animations may run slowly
    * if the browser tab is not focused.
-   *
+   * <p>
    * Increase this multiplier to increase the duration of the tests, reducing
    * the potential of an error caused by timing issues.
    */
   private static int DELAY_MULTIPLIER = 3000;
-
   private List<AnimationCallback> callbacks;
-  private double curTime;
-  private StubAnimationScheduler scheduler;
+  private double                  curTime;
+  private StubAnimationScheduler  scheduler;
 
   @Override
   public String getModuleName() {
-    return "org.gwtproject.animation.Animation";
+    return "org.gwtproject.animation.AnimationTest";
+  }
+
+  @Override
+  protected void gwtSetUp()
+    throws Exception {
+    scheduler = new StubAnimationScheduler();
+    callbacks = scheduler.getAnimationCallbacks();
+    curTime = Duration.currentTimeMillis();
+  }
+
+  @Override
+  protected void gwtTearDown()
+    throws Exception {
+    scheduler = null;
+    callbacks = null;
   }
 
   /**
@@ -175,7 +87,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertUpdated(false);
     anim.assertCompleted(true);
     anim.assertCancelled(false);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
     anim.reset();
 
     // Cancel the animation.
@@ -188,6 +101,18 @@ public class AnimationTest extends GWTTestCase {
   }
 
   /**
+   * Execute the last callback requested from the scheduler at the specified
+   * time.
+   *
+   * @param timestamp the time to pass to the callback
+   */
+  private void executeLastCallbackAt(double timestamp) {
+    assertTrue(callbacks.size() > 0);
+    AnimationCallback callback = callbacks.remove(callbacks.size() - 1);
+    callback.execute(timestamp);
+  }
+
+  /**
    * Test canceling an {@link Animation} before onStart is called.
    */
   public void testCancelBeforeOnStart() {
@@ -195,13 +120,15 @@ public class AnimationTest extends GWTTestCase {
     assertFalse(anim.isRunning());
 
     // Run the animation in the future.
-    anim.run(DELAY_MULTIPLIER, curTime + 1000);
+    anim.run(DELAY_MULTIPLIER,
+             curTime + 1000);
     assertTrue(anim.isRunning());
     anim.assertStarted(false);
     anim.assertUpdated(false);
     anim.assertCompleted(false);
     anim.assertCancelled(false);
-    assertEquals(1, callbacks.size());
+    assertEquals(1,
+                 callbacks.size());
     anim.reset();
 
     // Cancel the animation before it starts.
@@ -211,7 +138,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertUpdated(false);
     anim.assertCompleted(false);
     anim.assertCancelled(true);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
   }
 
   /**
@@ -239,7 +167,8 @@ public class AnimationTest extends GWTTestCase {
     anim.reset();
 
     // Cancel the animation.
-    assertEquals(1, callbacks.size());
+    assertEquals(1,
+                 callbacks.size());
     anim.cancel();
     assertFalse(anim.isRunning());
     anim.assertStarted(false);
@@ -247,7 +176,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertCompleted(false);
     anim.assertCancelled(true);
     anim.assertProgress(-1.0);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
   }
 
   /**
@@ -286,7 +216,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertUpdated(false);
     anim.assertCompleted(false);
     anim.assertCancelled(false);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
     assertFalse(anim.isRunning());
   }
 
@@ -318,7 +249,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertUpdated(false);
     anim.assertCancelled(true);
     anim.assertCompleted(false);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
   }
 
   /**
@@ -359,7 +291,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertCompleted(false);
     anim.assertCancelled(true);
     anim.assertProgress(-1.0);
-    assertEquals(0, callbacks.size());
+    assertEquals(0,
+                 callbacks.size());
   }
 
   /**
@@ -402,7 +335,8 @@ public class AnimationTest extends GWTTestCase {
     // Canceling an animation before it starts does not call onStart or
     // onComplete
     anim.reset();
-    anim.run(10 * DELAY_MULTIPLIER, curTime + DELAY_MULTIPLIER);
+    anim.run(10 * DELAY_MULTIPLIER,
+             curTime + DELAY_MULTIPLIER);
     assertTrue(anim.isRunning());
     anim.cancel();
     assertFalse(anim.isRunning());
@@ -449,7 +383,8 @@ public class AnimationTest extends GWTTestCase {
     anim.assertUpdated(false);
     anim.assertCompleted(false);
     anim.assertCancelled(false);
-    assertEquals(1, callbacks.size());
+    assertEquals(1,
+                 callbacks.size());
   }
 
   /**
@@ -458,7 +393,8 @@ public class AnimationTest extends GWTTestCase {
   public void testRunFuture() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
-    anim.run(2 * DELAY_MULTIPLIER, curTime + 2 * DELAY_MULTIPLIER);
+    anim.run(2 * DELAY_MULTIPLIER,
+             curTime + 2 * DELAY_MULTIPLIER);
     assertTrue(anim.isRunning());
     anim.assertStarted(false);
     anim.assertUpdated(false);
@@ -528,7 +464,8 @@ public class AnimationTest extends GWTTestCase {
   public void testRunPast() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
-    anim.run(3 * DELAY_MULTIPLIER, curTime - DELAY_MULTIPLIER);
+    anim.run(3 * DELAY_MULTIPLIER,
+             curTime - DELAY_MULTIPLIER);
     assertTrue(anim.isRunning());
     anim.assertStarted(true);
     anim.assertUpdated(false);
@@ -556,35 +493,120 @@ public class AnimationTest extends GWTTestCase {
   public void testRunPaster() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
-    anim.run(DELAY_MULTIPLIER, curTime - 2 * DELAY_MULTIPLIER);
+    anim.run(DELAY_MULTIPLIER,
+             curTime - 2 * DELAY_MULTIPLIER);
     anim.assertStarted(true);
     anim.assertUpdated(false);
     anim.assertCompleted(true);
     assertFalse(anim.isRunning());
   }
 
-  @Override
-  protected void gwtSetUp() throws Exception {
-    scheduler = new StubAnimationScheduler();
-    callbacks = scheduler.getAnimationCallbacks();
-    curTime = Duration.currentTimeMillis();
-  }
+  /**
+   * A default implementation of {@link Animation} used for testing.
+   */
+  private class DefaultAnimation
+    extends Animation {
+    protected boolean canceled    = false;
+    protected boolean completed   = false;
+    protected double  curProgress = -1.0;
+    protected boolean started     = false;
+    protected boolean updated     = false;
 
-  @Override
-  protected void gwtTearDown() throws Exception {
-    scheduler = null;
-    callbacks = null;
+    public DefaultAnimation() {
+      super(scheduler);
+    }
+
+    /**
+     * Assert the value of canceled.
+     */
+    public void assertCancelled(boolean expected) {
+      assertEquals(expected,
+                   canceled);
+    }
+
+    /**
+     * Assert the value of completed.
+     */
+    public void assertCompleted(boolean expected) {
+      assertEquals(expected,
+                   completed);
+    }
+
+    /**
+     * Assert that the progress equals the specified value.
+     */
+    public void assertProgress(double expected) {
+      assertEquals(expected,
+                   curProgress);
+    }
+
+    /**
+     * Assert the value of started.
+     */
+    public void assertStarted(boolean expected) {
+      assertEquals(expected,
+                   started);
+    }
+
+    /**
+     * Assert the value of updated.
+     */
+    public void assertUpdated(boolean expected) {
+      assertEquals(expected,
+                   updated);
+    }
+
+    public void reset() {
+      canceled = false;
+      completed = false;
+      updated = false;
+      started = false;
+      curProgress = -1.0;
+    }
+
+    @Override
+    protected void onCancel() {
+      super.onCancel();
+      canceled = true;
+    }
+
+    @Override
+    protected void onComplete() {
+      super.onComplete();
+      completed = true;
+    }
+
+    @Override
+    protected void onUpdate(double progress) {
+      updated = true;
+      curProgress = progress;
+    }
+
+    @Override
+    protected void onStart() {
+      super.onStart();
+      started = true;
+    }
   }
 
   /**
-   * Execute the last callback requested from the scheduler at the specified
-   * time.
-   *
-   * @param timestamp the time to pass to the callback
+   * A custom {@link Animation} used for testing.
    */
-  private void executeLastCallbackAt(double timestamp) {
-    assertTrue(callbacks.size() > 0);
-    AnimationCallback callback = callbacks.remove(callbacks.size() - 1);
-    callback.execute(timestamp);
+  private class TestAnimation
+    extends DefaultAnimation {
+    @Override
+    protected void onCancel() {
+      canceled = true;
+    }
+
+    @Override
+    protected void onComplete() {
+      completed = true;
+    }
+
+    @Override
+    protected void onStart() {
+      started = true;
+    }
   }
 }
