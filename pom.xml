@@ -13,12 +13,12 @@
   <properties>
     <!-- Convenience property to set the GWT version -->
     <gwt.version>2.8.2</gwt.version>
-  
+
     <core.version>1.0-SNAPSHOT</core.version>
     <dom.version>1.0-SNAPSHOT</dom.version>
     <elemental2.version>1.0.0-RC1</elemental2.version>
     <timer.version>1.0-SNAPSHOT</timer.version>
-  
+
     <!-- GWT 2.8 requires 1.8 -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
@@ -97,7 +97,7 @@
           <target>${maven.compiler.target}</target>
         </configuration>
       </plugin>
-  
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
@@ -118,7 +118,7 @@
           </execution>
         </executions>
       </plugin>
-  
+
       <plugin>
         <!--
         The integration-test phase runs after regular test phase (but before verify/install).
@@ -136,7 +136,7 @@
           </groups>
         </configuration>
       </plugin>
-      
+
       <plugin>
         <groupId>net.ltgt.gwt.maven</groupId>
         <artifactId>gwt-maven-plugin</artifactId>
@@ -145,7 +145,7 @@
         <configuration>
           <moduleName>org.gwtproject.animation.Animation</moduleName>
         </configuration>
-       </plugin>
+      </plugin>
     </plugins>
   </build>
 
