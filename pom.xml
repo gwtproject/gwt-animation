@@ -11,12 +11,6 @@
   <name>GWT Animation</name>
 
   <properties>
-<<<<<<< HEAD
-=======
-    <!-- Convenience property to set the GWT version -->
-    <gwt.version>2.8.2</gwt.version>
-
->>>>>>> 4de3549a1e40976af0f3d42a6bb2361aa4cbbc11
     <core.version>1.0-SNAPSHOT</core.version>
     <dom.version>1.0-SNAPSHOT</dom.version>
     <elemental2.version>1.0.0-RC1</elemental2.version>
