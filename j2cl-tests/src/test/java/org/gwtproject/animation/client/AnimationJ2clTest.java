@@ -22,6 +22,7 @@ import java.util.List;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.testing.StubAnimationScheduler;
 import org.gwtproject.core.client.Duration;
+import org.junit.Test;
 
 /**
  * Tests the {@link Animation} class.
@@ -58,6 +59,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} after it completes. */
+  @Test
   public void testCancelAfterOnComplete() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -101,6 +103,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} before onStart is called. */
+  @Test
   public void testCancelBeforeOnStart() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -126,6 +129,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} between updates. */
+  @Test
   public void testCancelBetweenUpdates() {
     TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -159,6 +163,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} within onComplete. */
+  @Test
   public void testCancelDuringOnComplete() {
     final TestAnimation anim =
         new TestAnimation() {
@@ -198,6 +203,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} within onStart. */
+  @Test
   public void testCancelDuringOnStart() {
     final TestAnimation anim =
         new TestAnimation() {
@@ -228,6 +234,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test canceling an {@link Animation} during an update. */
+  @Test
   public void testCancelDuringOnUpdate() {
     final TestAnimation anim =
         new TestAnimation() {
@@ -268,6 +275,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test the default implementations of events in {@link Animation}. */
+  @Test
   public void testDefaultAnimation() {
     // Verify initial state
     final DefaultAnimation anim = new DefaultAnimation();
@@ -316,6 +324,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test that restarting an {@link Animation} within onComplete does not break. See issue 5639. */
+  @Test
   public void testRunDuringOnComplete() {
     final TestAnimation anim =
         new TestAnimation() {
@@ -354,6 +363,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test that an animation runs in the future. */
+  @Test
   public void testRunFuture() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -394,6 +404,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test that an animation runs synchronously if its duration is 0. */
+  @Test
   public void testRunNow() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -420,6 +431,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test running an animation that started in the past. */
+  @Test
   public void testRunPast() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());
@@ -446,6 +458,7 @@ public class AnimationJ2clTest {
   }
 
   /** Test running an animation that started and finished in the past. */
+  @Test
   public void testRunPaster() {
     final TestAnimation anim = new TestAnimation();
     assertFalse(anim.isRunning());

@@ -180,19 +180,8 @@
         <version>${maven.j2cl.plugin}</version>
         <executions>
           <execution>
-            <id>build-js</id>
-            <phase>process-classes</phase>
-            <goals>
-              <goal>build</goal>
-            </goals>
-            <configuration>
-              <entrypoint>org.gwtproject.animation.client.J2clTestEntryPointDummy</entrypoint>
-              <compilationLevel>BUNDLE</compilationLevel>
-            </configuration>
-          </execution>
-          <execution>
             <id>test</id>
-            <phase>test</phase>
+<!--            <phase>test</phase>-->
             <goals>
               <goal>test</goal>
             </goals>
