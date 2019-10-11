@@ -22,8 +22,6 @@ import java.util.List;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.testing.StubAnimationScheduler;
 import org.gwtproject.core.client.Duration;
-import org.junit.After;
-import org.junit.Before;
 
 /**
  * Tests the {@link Animation} class.
@@ -46,15 +44,15 @@ public class AnimationJ2clTest {
   private double curTime;
   private StubAnimationScheduler scheduler;
 
-  @Before
-  protected void setUp() {
+  //  @Before
+  public void setUp() {
     scheduler = new StubAnimationScheduler();
     callbacks = scheduler.getAnimationCallbacks();
     curTime = Duration.currentTimeMillis();
   }
 
-  @After
-  protected void teardown() {
+  //  @After
+  public void teardown() {
     scheduler = null;
     callbacks = null;
   }

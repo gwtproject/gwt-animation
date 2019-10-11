@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.gwtproject.animation;
+package org.gwtproject.animation.client;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
+/**
+ * Placeholder-class to get a Maven compile done.
+ *
+ * <p>This class is needed, cause otherwise the the closure compiler fails.
+ */
+public class J2clTestEntryPointDummy {
 
-/** Tests of the animation package. */
-public class AnimationJreSuite {
-  public static Test suite() {
-    TestSuite suite = new TestSuite("No browser tests for org.gwtproject.animation");
-
-    suite.addTestSuite(AnimationSchedulerJreTest.class);
-
-    return suite;
-  }
+  public J2clTestEntryPointDummy() {}
 }

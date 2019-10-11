@@ -89,11 +89,6 @@
       <artifactId>elemental2-dom</artifactId>
       <version>${elemental2.version}</version>
     </dependency>
-    <!--    <dependency>-->
-    <!--      <groupId>org.gwtproject.animation</groupId>-->
-    <!--      <artifactId>animation</artifactId>-->
-    <!--      <version>${animation.version}</version>-->
-    <!--    </dependency>-->
   </dependencies>
 
   <build>
@@ -233,13 +228,16 @@
     <!--      </plugin>-->
   </build>
 
-  <!--  <repositories>-->
-  <!--    <repository>-->
-  <!--      <id>${vertispan.snapshot.repo.id}</id>-->
-  <!--      <name>${vertispan.snapshot.repo.name}</name>-->
-  <!--      <url>${vertispan.snapshot.repo.url}</url>-->
-  <!--    </repository>-->
-  <!--  </repositories>-->
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
 
   <profiles>
     <!-- release profile to create sources, javadoc, and sign all artifacts before uploading -->

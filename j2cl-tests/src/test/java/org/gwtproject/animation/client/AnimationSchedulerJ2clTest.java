@@ -20,14 +20,11 @@ import static junit.framework.TestCase.fail;
 
 import com.google.j2cl.junit.apt.J2clTestInput;
 import elemental2.promise.Promise;
-import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationHandle;
 import org.gwtproject.core.client.Duration;
 import org.gwtproject.dom.client.DivElement;
 import org.gwtproject.dom.client.Document;
 import org.gwtproject.timer.client.Timer;
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 /** Tests the {@link AnimationScheduler} class. */
@@ -45,13 +42,13 @@ public class AnimationSchedulerJ2clTest {
 
   private AnimationScheduler scheduler;
 
-  @Before
-  protected void setUp() {
+  //  @Before
+  public void setUp() {
     scheduler = AnimationScheduler.get();
   }
 
-  @After
-  protected void teardown() {
+  //  @After
+  public void teardown() {
     scheduler = null;
   }
 
@@ -59,26 +56,19 @@ public class AnimationSchedulerJ2clTest {
   public Promise<Void> testCancel() {
     AnimationHandle handle =
         scheduler.requestAnimationFrame(
-            new AnimationCallback() {
-              @Override
-              public void execute(double timestamp) {
-                fail("The animation frame was cancelled and should not execute.");
-              }
-            },
-            null);
+            timestamp -> fail("The animation frame was cancelled and should not execute."), null);
     // Cancel the animation frame.
     handle.cancel();
+    // Wait to make sure it doesn't execute.
     return new Promise<>(
-        ((resolve, reject) -> {
-          Timer timer =
-              new Timer() {
-                @Override
-                public void run() {
-                  resolve.onInvoke((Void) null);
-                }
-              };
-          timer.schedule(TIMER_DELAY);
-        }));
+        (resolve, reject) -> {
+          new Timer() {
+            @Override
+            public void run() {
+              resolve.onInvoke((Void) null);
+            }
+          }.schedule(TIMER_DELAY);
+        });
   }
 
   @Test(timeout = TEST_TIMEOUT)
@@ -91,6 +81,7 @@ public class AnimationSchedulerJ2clTest {
               timestamp -> {
                 // Make sure timestamp is not a high-res timestamp (see issue 8570)
                 assertTrue(timestamp >= startTime);
+                resolve.onInvoke((Void) null);
               },
               element);
         });
@@ -105,6 +96,7 @@ public class AnimationSchedulerJ2clTest {
               timestamp -> {
                 // Make sure timestamp is not a high-res timestamp (see issue 8570)
                 assertTrue(timestamp >= startTime);
+                resolve.onInvoke((Void) null);
               },
               null);
         });

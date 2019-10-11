@@ -18,7 +18,6 @@ package org.gwtproject.animation.client;
 import com.google.gwt.junit.DoNotRunWith;
 import com.google.gwt.junit.Platform;
 import com.google.gwt.junit.client.GWTTestCase;
-import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationHandle;
 import org.gwtproject.core.client.Duration;
 import org.gwtproject.dom.client.DivElement;
@@ -58,17 +57,9 @@ public class AnimationGwt2SchedulerTest extends GWTTestCase {
     delayTestFinish(TEST_TIMEOUT);
     AnimationHandle handle =
         scheduler.requestAnimationFrame(
-            new AnimationCallback() {
-              @Override
-              public void execute(double timestamp) {
-                fail("The animation frame was cancelled and should not execute.");
-              }
-            },
-            null);
-
+            timestamp -> fail("The animation frame was cancelled and should not execute."), null);
     // Cancel the animation frame.
     handle.cancel();
-
     // Wait to make sure it doesn't execute.
     new Timer() {
       @Override
@@ -86,13 +77,10 @@ public class AnimationGwt2SchedulerTest extends GWTTestCase {
     final double startTime = Duration.currentTimeMillis();
     DivElement element = Document.get().createDivElement();
     scheduler.requestAnimationFrame(
-        new AnimationCallback() {
-          @Override
-          public void execute(double timestamp) {
-            // Make sure timestamp is not a high-res timestamp (see issue 8570)
-            assertTrue(timestamp >= startTime);
-            finishTest();
-          }
+        timestamp -> {
+          // Make sure timestamp is not a high-res timestamp (see issue 8570)
+          assertTrue(timestamp >= startTime);
+          finishTest();
         },
         element);
   }
@@ -103,13 +91,10 @@ public class AnimationGwt2SchedulerTest extends GWTTestCase {
     delayTestFinish(TEST_TIMEOUT);
     final double startTime = Duration.currentTimeMillis();
     scheduler.requestAnimationFrame(
-        new AnimationCallback() {
-          @Override
-          public void execute(double timestamp) {
-            // Make sure timestamp is not a high-res timestamp (see issue 8570)
-            assertTrue(timestamp >= startTime);
-            finishTest();
-          }
+        timestamp -> {
+          // Make sure timestamp is not a high-res timestamp (see issue 8570)
+          assertTrue(timestamp >= startTime);
+          finishTest();
         },
         null);
   }
