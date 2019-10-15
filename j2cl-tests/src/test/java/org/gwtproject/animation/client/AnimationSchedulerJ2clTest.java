@@ -25,6 +25,8 @@ import org.gwtproject.core.client.Duration;
 import org.gwtproject.dom.client.DivElement;
 import org.gwtproject.dom.client.Document;
 import org.gwtproject.timer.client.Timer;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /** Tests the {@link AnimationScheduler} class. */
@@ -42,12 +44,12 @@ public class AnimationSchedulerJ2clTest {
 
   private AnimationScheduler scheduler;
 
-  //  @Before
+  @Before
   public void setUp() {
     scheduler = AnimationScheduler.get();
   }
 
-  //  @After
+  @After
   public void teardown() {
     scheduler = null;
   }

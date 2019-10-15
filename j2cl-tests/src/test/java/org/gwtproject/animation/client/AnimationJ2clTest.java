@@ -22,6 +22,8 @@ import java.util.List;
 import org.gwtproject.animation.client.AnimationScheduler.AnimationCallback;
 import org.gwtproject.animation.client.testing.StubAnimationScheduler;
 import org.gwtproject.core.client.Duration;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -45,14 +47,14 @@ public class AnimationJ2clTest {
   private double curTime;
   private StubAnimationScheduler scheduler;
 
-  //  @Before
+  @Before
   public void setUp() {
     scheduler = new StubAnimationScheduler();
     callbacks = scheduler.getAnimationCallbacks();
     curTime = Duration.currentTimeMillis();
   }
 
-  //  @After
+  @After
   public void teardown() {
     scheduler = null;
     callbacks = null;
@@ -471,6 +473,7 @@ public class AnimationJ2clTest {
 
   /** A default implementation of {@link Animation} used for testing. */
   private class DefaultAnimation extends Animation {
+
     protected boolean canceled = false;
     protected boolean completed = false;
     protected double curProgress = -1.0;
@@ -541,6 +544,7 @@ public class AnimationJ2clTest {
 
   /** A custom {@link Animation} used for testing. */
   private class TestAnimation extends DefaultAnimation {
+
     @Override
     protected void onCancel() {
       canceled = true;
