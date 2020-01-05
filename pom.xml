@@ -44,8 +44,8 @@
 
   <modules>
     <module>gwt-animation</module>
-    <module>gwt2-tests</module>
-    <module>j2cl-tests</module>
+    <module>gwt-animation-gwt2-tests</module>
+    <module>gwt-animation-j2cl-tests</module>
   </modules>
 
   <properties>
