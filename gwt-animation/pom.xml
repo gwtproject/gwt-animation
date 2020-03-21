@@ -8,10 +8,10 @@
   <groupId>org.gwtproject.animation</groupId>
   <artifactId>gwt-animation</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>gwt-lib</packaging>
 
   <name>GWT Animation</name>
-  <description>tbd</description>
+  <description>GWT Animation Module</description>
   <url>https://github.com/gwtproject/gwt-animation</url>
   <organization>
     <name>The GWT Authors</name>
@@ -48,38 +48,19 @@
     <maven.compiler.target>1.8</maven.compiler.target>
 
     <maven.compiler.plugin>3.7.0</maven.compiler.plugin>
+    <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
     <maven.gpg.plugin>1.6</maven.gpg.plugin>
+    <maven.gwt.plugin>1.0.0</maven.gwt.plugin>
     <maven.javadoc.plugin>3.1.1</maven.javadoc.plugin>
     <maven.licence.plugin>3.0</maven.licence.plugin>
-    <maven.source.plugin>3.1.0</maven.source.plugin>
+    <maven.source.plugin>3.2.1</maven.source.plugin>
 
     <core.version>1.0-SNAPSHOT</core.version>
     <dom.version>1.0-SNAPSHOT</dom.version>
     <elemental2.version>1.0.0-RC1</elemental2.version>
-    <gwt.timer.version>1.0-SNAPSHOT</gwt.timer.version>
-    <!--    <animation.version>1.0-SNAPSHOT</animation.version>-->
-
-    <!--    &lt;!&ndash; GWT 2.8 requires 1.8 &ndash;&gt;-->
-    <!--    <maven.compiler.source>1.8</maven.compiler.source>-->
-    <!--    <maven.compiler.target>1.8</maven.compiler.target>-->
-
-    <!--    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
-
-    <!--    &lt;!&ndash; CI &ndash;&gt;-->
-    <!--    <vertispan.snapshot.repo.id>vertispan-snapshot-repository</vertispan.snapshot.repo.id>-->
-    <!--    <vertispan.snapshot.repo.name>Vertispan Snapshot Repository</vertispan.snapshot.repo.name>-->
-    <!--    <vertispan.snapshot.repo.url>https://repo.vertispan.com/gwt-snapshot/</vertispan.snapshot.repo.url>-->
-
-    <!--    <junit.version>4.12</junit.version>-->
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.gwtproject.timer</groupId>
-      <artifactId>gwt-timer</artifactId>
-      <version>${gwt.timer.version}</version>
-    </dependency>
-
     <dependency>
       <groupId>org.gwtproject.core</groupId>
       <artifactId>gwt-core</artifactId>
@@ -98,36 +79,16 @@
   </dependencies>
 
   <build>
-    <resources>
-      <resource>
-        <directory>src/main/java</directory>
-        <includes>
-          <include>**/animation/**</include>
-        </includes>
-      </resource>
-      <resource>
-        <directory>src/main/resources</directory>
-        <includes>
-          <include>**/animation/**</include>
-          <include>**/*.gwt.xml</include>
-          <include>**/*.html</include>
-          <include>**/public/**</include>
-        </includes>
-      </resource>
-    </resources>
-
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>${maven.compiler.plugin}</version>
+        <groupId>net.ltgt.gwt.maven</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>${maven.gwt.plugin}</version>
+        <extensions>true</extensions>
         <configuration>
-          <encoding>${project.build.sourceEncoding}</encoding>
-          <source>${maven.compiler.source}</source>
-          <target>${maven.compiler.target}</target>
+          <moduleName>org.gwtproject.animation.Animation</moduleName>
         </configuration>
       </plugin>
-
       <plugin>
         <groupId>com.mycila</groupId>
         <artifactId>license-maven-plugin</artifactId>
@@ -161,77 +122,25 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven.deploy.plugin}</version>
+      </plugin>
     </plugins>
-
-    <!--      <plugin>-->
-    <!--        <groupId>org.apache.maven.plugins</groupId>-->
-    <!--        <artifactId>maven-compiler-plugin</artifactId>-->
-    <!--        <version>3.5.1</version>-->
-    <!--        <configuration>-->
-    <!--          <source>${maven.compiler.source}</source>-->
-    <!--          <target>${maven.compiler.target}</target>-->
-    <!--        </configuration>-->
-    <!--      </plugin>-->
-
-    <!--      <plugin>-->
-    <!--        <groupId>org.apache.maven.plugins</groupId>-->
-    <!--        <artifactId>maven-checkstyle-plugin</artifactId>-->
-    <!--        <version>2.17</version>-->
-    <!--        <executions>-->
-    <!--          <execution>-->
-    <!--            <id>validate</id>-->
-    <!--            <phase>validate</phase>-->
-    <!--            <configuration>-->
-    <!--              <encoding>UTF-8</encoding>-->
-    <!--              <consoleOutput>true</consoleOutput>-->
-    <!--              <failsOnError>true</failsOnError>-->
-    <!--              <configLocation>checkstyle.xml</configLocation>-->
-    <!--            </configuration>-->
-    <!--            <goals>-->
-    <!--              <goal>check</goal>-->
-    <!--            </goals>-->
-    <!--          </execution>-->
-    <!--        </executions>-->
-    <!--      </plugin>-->
-
-    <!--      <plugin>-->
-    <!--        &lt;!&ndash;-->
-    <!--        The integration-test phase runs after regular test phase (but before verify/install).-->
-    <!--        We use this to our advantage to peak at the compiled output from the GWTTestSuite-->
-    <!--         &ndash;&gt;-->
-    <!--        <groupId>org.apache.maven.plugins</groupId>-->
-    <!--        <artifactId>maven-failsafe-plugin</artifactId>-->
-    <!--        <version>2.20.1</version>-->
-    <!--        <configuration>-->
-    <!--          <includes>-->
-    <!--            <include>**/*.class</include>-->
-    <!--          </includes>-->
-    <!--          <groups>-->
-    <!--            org.gwtproject.animation.client.IntegrationTest-->
-    <!--          </groups>-->
-    <!--        </configuration>-->
-    <!--      </plugin>-->
-
-    <!--      <plugin>-->
-    <!--        <groupId>net.ltgt.gwt.maven</groupId>-->
-    <!--        <artifactId>gwt-maven-plugin</artifactId>-->
-    <!--        <version>1.0-rc-10</version>-->
-    <!--        <extensions>true</extensions>-->
-    <!--        <configuration>-->
-    <!--          <moduleName>org.gwtproject.animation.Animation</moduleName>-->
-    <!--        </configuration>-->
-    <!--      </plugin>-->
   </build>
 
   <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
     <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      <id>vertispan-releases</id>
+      <name>Vertispan hosted artifacts-releases</name>
+      <url>https://repo.vertispan.com/j2cl</url>
     </repository>
+    <snapshotRepository>
+      <id>vertispan-snapshots</id>
+      <name>Vertispan hosted artifacts-snapshots</name>
+      <url>https://repo.vertispan.com/j2cl</url>
+    </snapshotRepository>
   </distributionManagement>
 
   <profiles>
