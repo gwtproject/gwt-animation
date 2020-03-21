@@ -58,9 +58,16 @@
     <core.version>1.0-SNAPSHOT</core.version>
     <dom.version>1.0-SNAPSHOT</dom.version>
     <elemental2.version>1.0.0-RC1</elemental2.version>
+    <gwt.timer.version>1.0-SNAPSHOT</gwt.timer.version>
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>org.gwtproject.timer</groupId>
+      <artifactId>gwt-timer</artifactId>
+      <version>${gwt.timer.version}</version>
+    </dependency>
+
     <dependency>
       <groupId>org.gwtproject.core</groupId>
       <artifactId>gwt-core</artifactId>

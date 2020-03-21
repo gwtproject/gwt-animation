@@ -45,8 +45,6 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <gwt.timer.version>1.0-SNAPSHOT</gwt.timer.version>
-
     <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
     <maven.fmt.plugin>2.5.1</maven.fmt.plugin>
   </properties>
@@ -62,12 +60,6 @@
       <groupId>org.gwtproject.animation</groupId>
       <artifactId>gwt-animation</artifactId>
       <version>${project.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.gwtproject.timer</groupId>
-      <artifactId>gwt-timer</artifactId>
-      <version>${gwt.timer.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
