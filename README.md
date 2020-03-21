@@ -22,6 +22,6 @@ on the parent directory.
 
 To run the j2cl tests:
 
-* switch to the 'gwt-aria-animation-tests' directory
+* switch to the 'gwt-animation-tests' directory
 * run `mvn j2cl:clean` & `mvn j2cl:test`
 
