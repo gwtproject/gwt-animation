@@ -1,5 +1,5 @@
 /*
- * Copyright © 2019 The GWT Authors
+ * Copyright © 2020 The GWT Project Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import org.gwtproject.animation.client.AnimationGwt2SchedulerTest;
 import org.gwtproject.animation.client.AnimationGwt2Test;
 
 /** Tests of the animation package. */
-public class AnimationGwt2Suite {
+public class AnimatiomGwtTestSuite {
 
   public static Test suite() {
     TestSuite suite = new TestSuite("Tests of the animation package");

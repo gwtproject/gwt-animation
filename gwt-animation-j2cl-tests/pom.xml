@@ -1,75 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
     <groupId>org.gwtproject.animation</groupId>
     <artifactId>gwt-animation-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>dev</version>
   </parent>
   <artifactId>gwt-animation-j2cl-tests</artifactId>
+  <version>${revision}</version>
 
-  <version>1.0-SNAPSHOT</version>
-
-  <name>GWT Animation J2CL Tests</name>
+  <name>GWT Animation - J2CL Tests</name>
   <description>Test cases for the J2Cl tests</description>
   <url>https://github.com/gwtproject/gwt-animation</url>
 
-  <organization>
-    <name>The GWT Authors</name>
-    <url>https://github.com/gwtproject</url>
-  </organization>
-
-  <licenses>
-    <license>
-      <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-    </license>
-  </licenses>
-
-  <developers>
-    <developer>
-      <name>The GWT Authors</name>
-      <organization>The GWT Project Authors</organization>
-      <url>https://github.com/gwtproject</url>
-    </developer>
-  </developers>
-
-  <scm>
-    <connection>scm:git:git://github.com/gwtproject/gwt-animation.git</connection>
-    <developerConnection>scm:git:ssh://github.com/gwtproject/gwt-animation.git</developerConnection>
-    <url>https://github.com/gwtproject/gwt-animation/tree/master</url>
-  </scm>
-
-  <inceptionYear>2019</inceptionYear>
-
   <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-
-    <maven.compiler.plugin>3.7.0</maven.compiler.plugin>
-    <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
-    <maven.install.plugin>3.0.0-M1</maven.install.plugin>
-    <maven.jar.plugin>3.1.2</maven.jar.plugin>
-    <maven.j2cl.plugin>0.13-SNAPSHOT</maven.j2cl.plugin>
-    <maven.licence.plugin>3.0</maven.licence.plugin>
-    <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
+    <maven.j2cl.plugin>0.16-SNAPSHOT</maven.j2cl.plugin>
 
     <!-- CI -->
     <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
-    <google.snapshot.repo.url>https://oss.sonatype.org/content/repositories/google-snapshots/</google.snapshot.repo.url>
 
-    <elemental2.version>1.0.0-RC1</elemental2.version>
-    <gwt.core.version>1.0-SNAPSHOT</gwt.core.version>
-    <gwt.dom.version>1.0-SNAPSHOT</gwt.dom.version>
-    <jsinterop.base.version>1.0.0-SNAPSHOT</jsinterop.base.version>
-    <j2cl.version>0.7-SNAPSHOT</j2cl.version>
-    <slf4j.version>1.7.5</slf4j.version>
-    <timer.version>1.0-SNAPSHOT</timer.version>
+    <gwt.core.version>HEAD-SNAPSHOT</gwt.core.version>
+    <gwt.dom.version>HEAD-SNAPSHOT</gwt.dom.version>
+    <j2cl.version>0.8-SNAPSHOT</j2cl.version>
   </properties>
 
   <dependencies>
@@ -116,7 +70,6 @@
       <groupId>com.vertispan.j2cl</groupId>
       <artifactId>gwttestcase-emul</artifactId>
       <version>${j2cl.version}</version>
-      <classifier>sources</classifier>
       <scope>test</scope>
     </dependency>
     <dependency>
@@ -125,14 +78,17 @@
       <version>${j2cl.version}</version>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.gwtproject.animation</groupId>
+      <artifactId>gwt-animation</artifactId>
+      <version>${revision}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
-      <plugin>
-        <groupId>com.mycila</groupId>
-        <artifactId>license-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>com.vertispan.j2cl</groupId>
         <artifactId>j2cl-maven-plugin</artifactId>
@@ -141,9 +97,9 @@
           <compilationLevel>ADVANCED</compilationLevel>
         </configuration>
         <executions>
-          <!-- to run this from command line, use mvn j2cl:test@j2cl-test -->
           <execution>
             <id>j2cl-test</id>
+            <phase>test</phase>
             <goals>
               <goal>test</goal>
             </goals>
@@ -158,14 +114,27 @@
           <skipTests>true</skipTests>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven.deploy.plugin}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
+
 
   <repositories>
     <repository>
       <id>vertispan-snapshots</id>
       <name>Vertispan hosted artifacts-releases</name>
       <url>${vertispan.j2cl.repo.url}</url>
+    </repository>
+    <repository>
+      <id>ossrh-snpshot</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
   </repositories>
 
