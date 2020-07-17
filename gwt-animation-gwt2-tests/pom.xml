@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.gwtproject.animation</groupId>
     <artifactId>gwt-animation-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>HEAD-SNAPSHOT</version>
   </parent>
   <artifactId>gwt-animation-gwt2-tests</artifactId>
 
@@ -59,9 +59,9 @@
     <maven.licence.plugin>3.0</maven.licence.plugin>
     <maven.source.plugin>3.1.0</maven.source.plugin>
 
-    <gwt.version>2.8.2</gwt.version>
+    <gwt.version>2.9.0</gwt.version>
     <junit.version>4.12</junit.version>
-    <timer.version>1.0-SNAPSHOT</timer.version>
+    <timer.version>HEAD-SNAPSHOT</timer.version>
   </properties>
 
   <dependencies>
