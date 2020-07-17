@@ -7,7 +7,7 @@
 
   <groupId>org.gwtproject.animation</groupId>
   <artifactId>gwt-animation</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>HEAD-SNAPSHOT</version>
   <packaging>gwt-lib</packaging>
 
   <name>GWT Animation</name>
@@ -55,10 +55,10 @@
     <maven.licence.plugin>3.0</maven.licence.plugin>
     <maven.source.plugin>3.2.1</maven.source.plugin>
 
-    <core.version>1.0-SNAPSHOT</core.version>
-    <dom.version>1.0-SNAPSHOT</dom.version>
-    <elemental2.version>1.0.0-RC1</elemental2.version>
-    <gwt.timer.version>1.0-SNAPSHOT</gwt.timer.version>
+    <core.version>HEAD-SNAPSHOT</core.version>
+    <dom.version>HEAD-SNAPSHOT</dom.version>
+    <elemental2.version>1.1.0</elemental2.version>
+    <gwt.timer.version>HEAD-SNAPSHOT</gwt.timer.version>
   </properties>
 
   <dependencies>

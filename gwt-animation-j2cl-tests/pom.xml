@@ -7,7 +7,7 @@
   <parent>
     <groupId>org.gwtproject.animation</groupId>
     <artifactId>gwt-animation-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>HEAD-SNAPSHOT</version>
   </parent>
   <artifactId>gwt-animation-j2cl-tests</artifactId>
 
@@ -55,7 +55,7 @@
     <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
     <maven.install.plugin>3.0.0-M1</maven.install.plugin>
     <maven.jar.plugin>3.1.2</maven.jar.plugin>
-    <maven.j2cl.plugin>0.13-SNAPSHOT</maven.j2cl.plugin>
+    <maven.j2cl.plugin>0.16-SNAPSHOT</maven.j2cl.plugin>
     <maven.licence.plugin>3.0</maven.licence.plugin>
     <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
 
@@ -63,13 +63,13 @@
     <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
     <google.snapshot.repo.url>https://oss.sonatype.org/content/repositories/google-snapshots/</google.snapshot.repo.url>
 
-    <elemental2.version>1.0.0-RC1</elemental2.version>
-    <gwt.core.version>1.0-SNAPSHOT</gwt.core.version>
-    <gwt.dom.version>1.0-SNAPSHOT</gwt.dom.version>
-    <jsinterop.base.version>1.0.0-SNAPSHOT</jsinterop.base.version>
-    <j2cl.version>0.7-SNAPSHOT</j2cl.version>
+    <elemental2.version>1.1.0</elemental2.version>
+    <gwt.core.version>HEAD-SNAPSHOT</gwt.core.version>
+    <gwt.dom.version>HEAD-SNAPSHOT</gwt.dom.version>
+    <jsinterop.base.version>2.0.0</jsinterop.base.version>
+    <j2cl.version>0.8-SNAPSHOT</j2cl.version>
     <slf4j.version>1.7.5</slf4j.version>
-    <timer.version>1.0-SNAPSHOT</timer.version>
+    <timer.version>HEAD-SNAPSHOT</timer.version>
   </properties>
 
   <dependencies>
