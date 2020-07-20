@@ -6,11 +6,7 @@
   <parent>
     <groupId>org.gwtproject.animation</groupId>
     <artifactId>gwt-animation-parent</artifactId>
-<<<<<<< HEAD
     <version>dev</version>
-=======
-    <version>HEAD-SNAPSHOT</version>
->>>>>>> origin/master
   </parent>
   <artifactId>gwt-animation-gwt2-tests</artifactId>
   <version>${revision}</version>
@@ -24,10 +20,8 @@
 
     <gwt.version>2.9.0</gwt.version>
     <junit.version>4.12</junit.version>
-<<<<<<< HEAD
-=======
+
     <timer.version>HEAD-SNAPSHOT</timer.version>
->>>>>>> origin/master
   </properties>
 
   <dependencies>

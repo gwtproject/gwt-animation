@@ -44,7 +44,7 @@
 
   <modules>
     <module>gwt-animation</module>
-<!--    <module>gwt-animation-gwt2-tests</module>-->
+    <module>gwt-animation-gwt2-tests</module>
     <module>gwt-animation-j2cl-tests</module>
   </modules>
 
@@ -61,7 +61,9 @@
     <maven.flatten.plugin>1.2.2</maven.flatten.plugin>
     <maven.fmt.plugin>2.9</maven.fmt.plugin>
     <maven.install.plugin>3.0.0-M1</maven.install.plugin>
+    <maven.javadoc.plugin>3.2.0</maven.javadoc.plugin>
     <maven.license.plugin>3.0</maven.license.plugin>
+    <maven.source.plugin>3.2.1</maven.source.plugin>
     <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
 
     <elemental2.version>1.1.0</elemental2.version>
