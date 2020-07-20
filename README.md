@@ -48,39 +48,9 @@ on the parent directory. This will build the artifact and run tests against the 
 
 **GWT Animation requires GWT 2.9.0 or newer!**
 
-
-## Dependencies
-
-GWT Animation does not depend on any other module.
-
-
-GWT Animation module for GWT 2 and J2CL.
-
-### Dependency
-
-```xml
-<dependency>
-    <groupId>org.gwtproject.animation</groupId>
-    <artifactId>gwt-animation</artifactId>
-    <version>1.0-SNAPSHOT</version>
-</dependency>
-```
-
-## Instructions
-
-To build gwt-animation:
-
-* run `mvn clean verify`
-
-on the parent directory. This will build the artifact and run tests against the JVM, J2CL, and GWT2.
-
-## System Requirements
-
-**GWT Animation requires GWT 2.9.0 or newer!**
-
-
 ## Dependencies
 
 GWT Animation depends on the following modules:
 * gwt-core
 * gwt-dom
+* gwt-timer
