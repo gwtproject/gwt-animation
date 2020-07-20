@@ -18,12 +18,24 @@
   <properties>
     <maven.j2cl.plugin>0.16-SNAPSHOT</maven.j2cl.plugin>
 
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+
     <!-- CI -->
     <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
 
     <gwt.core.version>HEAD-SNAPSHOT</gwt.core.version>
     <gwt.dom.version>HEAD-SNAPSHOT</gwt.dom.version>
     <j2cl.version>0.8-SNAPSHOT</j2cl.version>
+<!--    <elemental2.version>1.1.0</elemental2.version>-->
+<!--    <gwt.core.version>HEAD-SNAPSHOT</gwt.core.version>-->
+<!--    <gwt.dom.version>HEAD-SNAPSHOT</gwt.dom.version>-->
+<!--    <jsinterop.base.version>2.0.0</jsinterop.base.version>-->
+<!--    <j2cl.version>0.8-SNAPSHOT</j2cl.version>-->
+<!--    <slf4j.version>1.7.5</slf4j.version>-->
+<!--    <timer.version>HEAD-SNAPSHOT</timer.version>-->
   </properties>
 
   <dependencies>
