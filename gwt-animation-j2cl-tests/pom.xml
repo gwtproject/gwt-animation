@@ -26,8 +26,6 @@
     <!-- CI -->
     <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
 
-    <gwt.core.version>HEAD-SNAPSHOT</gwt.core.version>
-    <gwt.dom.version>HEAD-SNAPSHOT</gwt.dom.version>
     <j2cl.version>0.8-SNAPSHOT</j2cl.version>
   </properties>
 
@@ -117,14 +115,6 @@
         <version>${maven.surfire.plugin}</version>
         <configuration>
           <skipTests>true</skipTests>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>${maven.deploy.plugin}</version>
-        <configuration>
-          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>

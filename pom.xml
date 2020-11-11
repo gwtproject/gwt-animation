@@ -60,12 +60,14 @@
     <maven.deploy.plugin>3.0.0-M1</maven.deploy.plugin>
     <maven.flatten.plugin>1.2.2</maven.flatten.plugin>
     <maven.fmt.plugin>2.9</maven.fmt.plugin>
-    <maven.install.plugin>3.0.0-M1</maven.install.plugin>
     <maven.javadoc.plugin>3.2.0</maven.javadoc.plugin>
     <maven.license.plugin>3.0</maven.license.plugin>
     <maven.source.plugin>3.2.1</maven.source.plugin>
     <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
 
+    <gwt.core.version>1.0.0-RC1</gwt.core.version>
+    <gwt.dom.version>1.0.0-RC1</gwt.dom.version>
+    <gwt.timer.version>1.0.0-RC1</gwt.timer.version>
     <elemental2.version>1.1.0</elemental2.version>
   </properties>
 
@@ -143,6 +145,14 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>${maven.deploy.plugin}</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
     </plugins>
     <pluginManagement>
       <plugins>
@@ -169,20 +179,6 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
-
-  <repositories>
-    <repository>
-      <id>oss-sonatype</id>
-      <name>oss-sonatype</name>
-      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-      <releases>
-        <enabled>false</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
 
   <distributionManagement>
     <snapshotRepository>
