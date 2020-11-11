@@ -20,8 +20,6 @@
 
     <gwt.version>2.9.0</gwt.version>
     <junit.version>4.13.1</junit.version>
-
-    <timer.version>HEAD-SNAPSHOT</timer.version>
   </properties>
 
   <dependencies>
@@ -64,14 +62,6 @@
           <failOnError>true</failOnError>
           <moduleName>org.gwtproject.animation.AnimatiomGwtTestSuite</moduleName>
           <sourceLevel>1.8</sourceLevel>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <version>${maven.deploy.plugin}</version>
-        <configuration>
-          <skip>true</skip>
         </configuration>
       </plugin>
     </plugins>

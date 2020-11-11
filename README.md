@@ -4,7 +4,7 @@
 
 A future-proof port of the `com.google.gwt.animation.Animation` GWT module, with no dependency on `gwt-user` (besides the Java Runtime Emulation), to prepare for GWT 3 / J2Cl.
 
-##  Migrating from `com.google.gwt.xml.XML`
+##  Migrating from `com.google.gwt.animation.Animation`
 
 1. Add the dependency to your build.
 
