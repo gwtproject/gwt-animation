@@ -218,6 +218,8 @@ public abstract class Animation {
   /**
    * Returns true if the animation is running. Note that animation may be 'running' but no callbacks
    * is executed yet.
+   *
+   * @return true if the animation is running
    */
   public boolean isRunning() {
     return isRunning;
