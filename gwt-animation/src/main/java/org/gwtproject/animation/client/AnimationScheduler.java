@@ -19,14 +19,19 @@ import org.gwtproject.dom.client.Element;
 
 /**
  * This class provides task scheduling for animations. Any exceptions thrown by the command objects
- * executed by the scheduler will be passed to the {@link
- * com.google.gwt.core.client.GWT.UncaughtExceptionHandler} if one is installed.
+ * executed by the scheduler will be handled by the window's {@code onerror} event handler. This can
+ * be handled through either {@link elemental2.dom.Window#onerror} or {@link
+ * org.gwtproject.core.client.GWT#setUncaughtExceptionHandler(org.gwtproject.core.client.GWT.UncaughtExceptionHandler)}.
  */
 public abstract class AnimationScheduler {
 
   private static AnimationScheduler instance;
 
-  /** Returns the default implementation of the AnimationScheduler API. */
+  /**
+   * Returns the default implementation of the AnimationScheduler API.
+   *
+   * @return the default implementation of the AnimationScheduler API.
+   */
   public static AnimationScheduler get() {
     if (instance == null) {
       instance = new AnimationSchedulerImplStandard();
