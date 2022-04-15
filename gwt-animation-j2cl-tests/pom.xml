@@ -16,52 +16,17 @@
   <url>https://github.com/gwtproject/gwt-animation</url>
 
   <properties>
-    <maven.j2cl.plugin>0.16-SNAPSHOT</maven.j2cl.plugin>
+    <maven.j2cl.plugin>0.19</maven.j2cl.plugin>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
 
-    <!-- CI -->
-    <vertispan.j2cl.repo.url>https://repo.vertispan.com/j2cl/</vertispan.j2cl.repo.url>
-
-    <j2cl.version>0.8-SNAPSHOT</j2cl.version>
+    <j2cl.version>0.10.0-3c97afeac</j2cl.version>
   </properties>
 
   <dependencies>
-    <!-- transitive dependencies that aren't correctly available at runtime -->
-    <dependency>
-      <groupId>com.google.elemental2</groupId>
-      <artifactId>elemental2-core</artifactId>
-      <version>${elemental2.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.elemental2</groupId>
-      <artifactId>elemental2-dom</artifactId>
-      <version>${elemental2.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.google.elemental2</groupId>
-      <artifactId>elemental2-promise</artifactId>
-      <version>${elemental2.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.gwtproject.core</groupId>
-      <artifactId>gwt-core</artifactId>
-      <version>${gwt.core.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.gwtproject.dom</groupId>
-      <artifactId>gwt-dom</artifactId>
-      <version>${gwt.dom.version}</version>
-      <scope>test</scope>
-    </dependency>
-
     <!-- test dependencies -->
     <dependency>
       <groupId>com.vertispan.j2cl</groupId>
@@ -119,25 +84,4 @@
       </plugin>
     </plugins>
   </build>
-
-
-  <repositories>
-    <repository>
-      <id>vertispan-snapshots</id>
-      <name>Vertispan hosted artifacts-releases</name>
-      <url>${vertispan.j2cl.repo.url}</url>
-    </repository>
-    <repository>
-      <id>ossrh-snpshot</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </repository>
-  </repositories>
-
-  <pluginRepositories>
-    <pluginRepository>
-      <id>vertispan-releases</id>
-      <name>Vertispan hosted artifacts-releases</name>
-      <url>${vertispan.j2cl.repo.url}</url>
-    </pluginRepository>
-  </pluginRepositories>
 </project>

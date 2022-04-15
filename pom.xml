@@ -66,7 +66,7 @@
     <maven.surfire.plugin>3.0.0-M1</maven.surfire.plugin>
 
     <gwt.core.version>1.0.0-RC1</gwt.core.version>
-    <gwt.dom.version>1.0.0-RC1</gwt.dom.version>
+    <gwt.dom.version>1.0.0-RC2</gwt.dom.version>
     <gwt.timer.version>1.0.0-RC1</gwt.timer.version>
     <elemental2.version>1.1.0</elemental2.version>
   </properties>
